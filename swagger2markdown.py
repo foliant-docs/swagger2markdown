@@ -1,13 +1,3 @@
-"""Convert a Swagger JSON file into Markdown with Jinja2.
-
-Usage:
-
-swagger2markdown <template> <data> <output>
-"""
-
-__version__ = "0.1.0"
-
-
 import argparse, json, os.path
 import jinja2, requests
 

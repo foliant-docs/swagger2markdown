@@ -9,7 +9,7 @@ __version__ = "0.1.0"
 
 
 import argparse, json, os.path
-import jinja2
+import jinja2, requests
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
     parser.add_argument(
         "-i", "--input",
         default="swagger.json",
-        help="path to the Swagger JSON file (default: swagger.json)",
+        help="path to or URL of the Swagger JSON file (default: swagger.json)",
         metavar=""
     )
 
@@ -38,7 +38,11 @@ def main():
 
     args = parser.parse_args()
 
-    swagger_data = json.load(open(args.input, encoding="utf8"))
+    try:
+        swagger_data = json.load(open(args.input, encoding="utf8"))
+
+    except FileNotFoundError:
+        swagger_data = requests.get(args.input).json()
 
     template = jinja2.Template(open(args.template, encoding="utf8").read())
 

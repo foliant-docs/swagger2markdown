@@ -10,13 +10,13 @@ def readme():
 
 setup(
     name="swagger2markdown",
-    version="0.1.0",
+    version="0.1.1",
     url="https://github.com/moigagoo/swagger2markdown",
     download_url="https://pypi.org/project/swagger2markdown",
     license="MIT",
     author="Konstantin Molchanov",
     author_email="moigagoo@live.com",
-    description="Converter from Swagger to Markdown.",
+    description="Converter from Swagger JSON to Markdown.",
     long_description=readme(),
     classifiers=[
         "Development Status :: 4 - Beta",

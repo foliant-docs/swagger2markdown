@@ -40,7 +40,6 @@ Usage
 
     optional arguments:
       -h, --help        show this help message and exit
-      -i , --input      path to the Swagger JSON file (default: swagger.json)
+      -i , --input      path to or URL of the Swagger JSON file (default: swagger.json)
       -o , --output     path to the output Markdown file (default: swagger.md)
-      -t , --template   Jinja2 template used for conversion (default:
-                        swagger.md.j2)
+      -t , --template   Jinja2 template used for conversion

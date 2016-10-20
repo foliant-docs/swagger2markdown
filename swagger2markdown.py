@@ -1,8 +1,3 @@
-"""Converter from Swagger JSON to Markdown."""
-
-__version__ = "0.1.0"
-
-
 import argparse, json, os.path
 import jinja2, requests
 

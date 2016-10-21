@@ -1,4 +1,4 @@
-import argparse, json, os.path
+import argparse, json, os.path, sys
 import jinja2, requests
 
 
@@ -28,14 +28,34 @@ def main():
 
     args = parser.parse_args()
 
+    print("Parsing Swagger JSON... ", end="")
+
     try:
         swagger_data = json.load(open(args.input, encoding="utf8"))
 
     except (FileNotFoundError, OSError):
-        swagger_data = requests.get(args.input).json()
+        try:
+            swagger_data = requests.get(args.input).json()
+        except requests.exceptions.MissingSchema:
+            sys.exit('Please specify the URL with schema, e.g. "http://"')
+        except requests.exceptions.ConnectionError:
+            sys.exit("No Swagger file found.")
+
+    print("Done!")
+
+    print("Parsing the template... ", end="")
 
     env = jinja2.Environment(extensions=["jinja2.ext.do"])
     template = env.from_string(open(args.template, encoding="utf8").read())
 
+    print("Done!")
+
+    print("Baking Markdown... ", end="")
+
     with open(args.output, "w", encoding="utf8") as output:
         output.write(template.render(swagger_data=swagger_data))
+    print("Done!")
+
+    print("---")
+
+    print("Result: ", args.output)

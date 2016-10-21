@@ -34,7 +34,8 @@ def main():
     except (FileNotFoundError, OSError):
         swagger_data = requests.get(args.input).json()
 
-    template = jinja2.Template(open(args.template, encoding="utf8").read())
+    env = jinja2.Environment(extensions=["jinja2.ext.do"])
+    template = env.from_string(open(args.template, encoding="utf8").read())
 
     with open(args.output, "w", encoding="utf8") as output:
         output.write(template.render(swagger_data=swagger_data))

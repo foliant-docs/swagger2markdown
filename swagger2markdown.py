@@ -31,7 +31,7 @@ def main():
     try:
         swagger_data = json.load(open(args.input, encoding="utf8"))
 
-    except FileNotFoundError:
+    except (FileNotFoundError, OSError):
         swagger_data = requests.get(args.input).json()
 
     template = jinja2.Template(open(args.template, encoding="utf8").read())

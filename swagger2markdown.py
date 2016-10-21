@@ -1,3 +1,6 @@
+__version__ = "0.1.4"
+
+
 import argparse, json, os.path, sys
 import jinja2, requests
 
@@ -24,6 +27,12 @@ def main():
         default=os.path.join(os.path.dirname(__file__), "swagger.md.j2"),
         help="Jinja2 template used for conversion",
         metavar="TEMPLATE"
+    )
+
+    parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version="swagger2markdown " + __version__
     )
 
     args = parser.parse_args()

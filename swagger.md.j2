@@ -102,17 +102,41 @@ Swagger File: [swagger.json]({{ swagger_uri }})
 
 {{ method_data.summary }}
 
-Query Param:
-  {% for param in method_data.parameters if param.in == "query" %}
-{#    {% if param.in == "query" %} #}
-  - {{ param.type }} {{ param.name }}: {{ param.description }}
+{% set query_params = [] %}
+{% for param in method_data.parameters if param.in == "query" %}
+  {% do query_params.append(param) %}
+{% endfor %}
 
-{#      {% elif param.in == "path" %}
-{{ param.type }} {{ param.name }}: {{ param.description }}
-      {% elif param.in == "body"  %}
-{{ render_ref(param.schema["$ref"]) }}
-      {% endif %} #}
-    {% endfor %}
+{% set path_params = [] %}
+{% for param in method_data.parameters if param.in == "path" %}
+  {% do path_params.append(param) %}
+{% endfor %}
+
+{% set body_params = [] %}
+{% for param in method_data.parameters if param.in == "body" %}
+  {% do body_params.append(param) %}
+{% endfor %}
+
+{% if query_params %}
+Query Params:
+  {% for param in query_params %}
+  - {{ param.name }} [{{ param.type }}]: {{ param.description }}
+  {% endfor %}
+{% endif %}
+
+{% if path_params %}
+Path Params:
+  {% for param in path_params %}
+  - {{ param.name }} [{{ param.type }}]: {{ param.description }}
+  {% endfor %}
+{% endif %}
+
+{% if body_params %}
+Body Params:
+  {% for param in method_data.parameters if param.in == "body" %}
+  - {{ render_ref(param.schema["$ref"]) }}
+  {% endfor %}
+{% endif %}
 
 Responses:
     {% for response_code, response_data in method_data.responses | dictsort %}

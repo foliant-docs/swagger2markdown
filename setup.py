@@ -10,7 +10,7 @@ def readme():
 
 setup(
     name="swagger2markdown",
-    version="0.1.1",
+    version="0.1.2",
     url="https://github.com/moigagoo/swagger2markdown",
     download_url="https://pypi.org/project/swagger2markdown",
     license="MIT",

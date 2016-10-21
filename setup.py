@@ -1,5 +1,7 @@
 from setuptools import setup
 
+import swagger2markdown
+
 def readme():
     try:
         with open("README.rst") as f:
@@ -10,7 +12,7 @@ def readme():
 
 setup(
     name="swagger2markdown",
-    version="0.1.4",
+    version=swagger2markdown.__version__,
     url="https://github.com/moigagoo/swagger2markdown",
     download_url="https://pypi.org/project/swagger2markdown",
     license="MIT",

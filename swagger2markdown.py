@@ -9,21 +9,21 @@ def main():
         "-i", "--input",
         default="swagger.json",
         help="path to or URL of the Swagger JSON file (default: swagger.json)",
-        metavar=""
+        metavar="SWAGGER_LOCATION"
     )
 
     parser.add_argument(
         "-o", "--output",
         default="swagger.md",
         help="path to the output Markdown file (default: swagger.md)",
-        metavar=""
+        metavar="OUTPUT"
     )
 
     parser.add_argument(
         "-t", "--template",
         default=os.path.join(os.path.dirname(__file__), "swagger.md.j2"),
         help="Jinja2 template used for conversion",
-        metavar=""
+        metavar="TEMPLATE"
     )
 
     args = parser.parse_args()

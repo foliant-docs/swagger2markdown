@@ -46,6 +46,14 @@
   {% endfor %}
 {% endmacro %}
 
+{% macro ensure_full_stop(text) %}
+  {% if text.endswith('.') %}
+{{ text }}
+  {% else %}
+{{ text }}.
+  {% endif %}
+{%endmacro%}
+
 
 # {{ swagger_data.info.title }}
 
@@ -100,34 +108,36 @@ Swagger File: [swagger.json]({{ swagger_uri }})
 
 ### {{ endpoint }} {{"{#"}}{{ endpoint | replace(" ", "-") | replace("/", "-") | replace("(", "") | replace(")", "") }}{{"}"}}
 
-{{ method_data.summary }}
+{{ ensure_full_stop(method_data.summary) }}
 
-{% set query_params = [] %}
-{% for param in method_data.parameters if param.in == "query" %}
-  {% do query_params.append(param) %}
-{% endfor %}
+{% if method_data.parameters %}
+  {% set query_params = [] %}
+  {% for param in method_data.parameters if param.in == "query" %}
+    {% do query_params.append(param) %}
+  {% endfor %}
 
-{% set path_params = [] %}
-{% for param in method_data.parameters if param.in == "path" %}
-  {% do path_params.append(param) %}
-{% endfor %}
+  {% set path_params = [] %}
+  {% for param in method_data.parameters if param.in == "path" %}
+    {% do path_params.append(param) %}
+  {% endfor %}
 
-{% set body_params = [] %}
-{% for param in method_data.parameters if param.in == "body" %}
-  {% do body_params.append(param) %}
-{% endfor %}
+  {% set body_params = [] %}
+  {% for param in method_data.parameters if param.in == "body" %}
+    {% do body_params.append(param) %}
+  {% endfor %}
+{% endif %}
 
 {% if query_params %}
 Query Params:
   {% for param in query_params %}
-  - {{ param.name }} [{{ param.type }}]: {{ param.description }}
+  - {{ param.name }} [{{ param.type }}]: {{ ensure_full_stop(param.description) }}
   {% endfor %}
 {% endif %}
 
 {% if path_params %}
 Path Params:
   {% for param in path_params %}
-  - {{ param.name }} [{{ param.type }}]: {{ param.description }}
+  - {{ param.name }} [{{ param.type }}]: {{ ensure_full_stop(param.description) }}
   {% endfor %}
 {% endif %}
 
@@ -140,7 +150,7 @@ Body Params:
 
 Responses:
     {% for response_code, response_data in method_data.responses | dictsort %}
-  - {{ response_code }}: {{ response_data.description }}
+  - {{ response_code }}: {{ ensure_full_stop(response_data.description) }}
       {% if "schema" in response_data %}
 
     {{ render_ref(response_data.schema["$ref"]) }}

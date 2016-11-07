@@ -46,13 +46,7 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro ensure_full_stop(text) %}
-  {% if text.endswith('.') %}
-{{ text }}
-  {% else %}
-{{ text }}.
-  {% endif %}
-{%endmacro%}
+{% macro ensure_full_stop(text) %}{% if text.endswith('.') %}{{ text }}{% else %}{{ text }}.{% endif %}{%endmacro%}
 
 
 # {{ swagger_data.info.title }}

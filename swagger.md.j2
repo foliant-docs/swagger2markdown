@@ -110,20 +110,22 @@ Swagger File: [swagger.json]({{ swagger_uri }})
 
 {{ ensure_full_stop(method_data.summary) }}
 
-{% set query_params = [] %}
-{% for param in method_data.parameters if param.in == "query" %}
-  {% do query_params.append(param) %}
-{% endfor %}
+{% if method_data.parameters %}
+  {% set query_params = [] %}
+  {% for param in method_data.parameters if param.in == "query" %}
+    {% do query_params.append(param) %}
+  {% endfor %}
 
-{% set path_params = [] %}
-{% for param in method_data.parameters if param.in == "path" %}
-  {% do path_params.append(param) %}
-{% endfor %}
+  {% set path_params = [] %}
+  {% for param in method_data.parameters if param.in == "path" %}
+    {% do path_params.append(param) %}
+  {% endfor %}
 
-{% set body_params = [] %}
-{% for param in method_data.parameters if param.in == "body" %}
-  {% do body_params.append(param) %}
-{% endfor %}
+  {% set body_params = [] %}
+  {% for param in method_data.parameters if param.in == "body" %}
+    {% do body_params.append(param) %}
+  {% endfor %}
+{% endif %}
 
 {% if query_params %}
 Query Params:

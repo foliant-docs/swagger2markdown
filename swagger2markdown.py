@@ -16,6 +16,13 @@ def main():
     )
 
     parser.add_argument(
+        "-a", "--additional",
+        default=None,
+        help="path to or URL of an complementary Swagger JSON file",
+        metavar="SWAGGER_LOCATION"
+    )
+
+    parser.add_argument(
         "-o", "--output",
         default="swagger.md",
         help="path to the output Markdown file (default: swagger.md)",
@@ -49,6 +56,21 @@ def main():
             sys.exit('Please specify the URL with schema, e.g. "http://"')
         except requests.exceptions.ConnectionError:
             sys.exit("No Swagger file found.")
+
+    if args.additional:
+        try:
+            additional_data = json.load(open(args.additional, encoding="utf8"))
+        except (FileNotFoundError, OSError):
+            try:
+                additional_data = requests.get(args.additional).json()
+            except requests.exceptions.MissingSchema:
+                sys.exit('Please specify the URL with schema, e.g. "http://"')
+            except requests.exceptions.ConnectionError:
+                sys.exit("No Swagger file found.")
+    else:
+        additional_data = {}
+
+    swagger_data = {**additional_data, **swagger_data}
 
     print("Done!")
 

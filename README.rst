@@ -36,15 +36,20 @@ Usage
 
 .. code-block:: shell
 
-    usage: swagger2markdown-script.py [-h] [-i SWAGGER_LOCATION] [-o OUTPUT]
-                                    [-t TEMPLATE]
+    usage: swagger2markdown [-h] [-i SWAGGER_LOCATION] [-a SWAGGER_LOCATION]
+                            [-o OUTPUT] [-t TEMPLATE] [-v]
 
     optional arguments:
-      -h, --help            show this help message and exit
-      -i SWAGGER_LOCATION, --input SWAGGER_LOCATION
+    -h, --help            show this help message and exit
+    -i SWAGGER_LOCATION, --input SWAGGER_LOCATION
                             path to or URL of the Swagger JSON file (default:
                             swagger.json)
-      -o OUTPUT, --output OUTPUT
+    -a SWAGGER_LOCATION, --additional SWAGGER_LOCATION
+                            path to or URL of an complementary Swagger JSON file
+    -o OUTPUT, --output OUTPUT
                             path to the output Markdown file (default: swagger.md)
-      -t TEMPLATE, --template TEMPLATE
+    -t TEMPLATE, --template TEMPLATE
                             Jinja2 template used for conversion
+    -v, --version         show program's version number and exit
+
+The content of the additional Swagger file is merged into the main file. It does not overwrite values in the main file, only fills in the missing ones.

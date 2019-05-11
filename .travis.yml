@@ -8,7 +8,7 @@ install:
   - poetry install
 
 script:
-  - poetry run swagger2markdown
+  - poetry run swagger2markdown -h
 
 deploy:
   provider: script
